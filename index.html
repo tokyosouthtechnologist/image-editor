@@ -49,10 +49,16 @@
 
     function sendResult() {
       const canvas = cropper.getCroppedCanvas();
+      if (!canvas) { alert("切り抜き範囲がありません"); return; }
+      
       // 親ウィンドウへデータを送る
       window.opener.postMessage({ type: 'SAVE_COMPLETE', blob: canvas.toDataURL('image/png') }, '*');
+      
+      // ユーザーに確認を表示して閉じる（ブロック回避）
+      alert("保存を送信しました。このウィンドウを閉じます。");
       window.close();
     }
   </script>
 </body>
 </html>
+
